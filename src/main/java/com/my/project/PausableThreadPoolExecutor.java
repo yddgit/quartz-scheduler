@@ -1,4 +1,4 @@
-package org;
+package com.my.project;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

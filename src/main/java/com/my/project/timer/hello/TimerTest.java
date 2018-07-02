@@ -1,4 +1,4 @@
-package org.timer.hello;
+package com.my.project.timer.hello;
 
 import java.util.Date;
 import java.util.Timer;

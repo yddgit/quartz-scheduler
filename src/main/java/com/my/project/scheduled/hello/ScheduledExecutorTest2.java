@@ -1,4 +1,4 @@
-package org.scheduled.hello;
+package com.my.project.scheduled.hello;
 
 import java.util.Calendar;
 import java.util.Date;

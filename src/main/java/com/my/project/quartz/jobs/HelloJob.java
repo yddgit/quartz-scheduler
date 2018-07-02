@@ -1,4 +1,4 @@
-package org.quartz.hello;
+package com.my.project.quartz.jobs;
 
 import java.util.Date;
 

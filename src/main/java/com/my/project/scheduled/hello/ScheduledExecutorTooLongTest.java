@@ -1,4 +1,4 @@
-package org.scheduled.hello;
+package com.my.project.scheduled.hello;
 
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -26,17 +26,28 @@ import java.util.concurrent.TimeUnit;
  * @author yang.dongdong
  *
  */
-public class ScheduledExecutorTest implements Runnable {
+public class ScheduledExecutorTooLongTest implements Runnable {
 
-    private String jobName = "";
+    private static boolean sleep   = true;
 
-    public ScheduledExecutorTest( String jobName ) {
+    private String         jobName = "";
+
+    public ScheduledExecutorTooLongTest( String jobName ) {
         super();
         this.jobName = jobName;
     }
 
     @Override
     public void run() {
+        try {
+            if ( sleep ) {
+                System.out.println( "Sleep 2 seconds..." );
+                Thread.sleep( 2000 );
+            }
+            sleep = false;
+        } catch ( InterruptedException e ) {
+            e.printStackTrace();
+        }
         Thread t = Thread.currentThread();
         System.out.println( String.format( "[%s, %s, %s, %4$tF %4$tT] execute %5$s", t.getName(), t.getPriority(), t
                 .getThreadGroup().getName(), new Date(), jobName ) );
@@ -48,14 +59,8 @@ public class ScheduledExecutorTest implements Runnable {
         long initialDelay1 = 1;
         long period1 = 1;
         // 从现在开始1秒钟之后，每隔1秒钟执行一次job1
-        ScheduledFuture < ? > sf1 = service.scheduleAtFixedRate( new ScheduledExecutorTest( "job1" ), initialDelay1,
-                period1, TimeUnit.SECONDS );
-
-        long initialDelay2 = 2;
-        long delay2 = 2;
-        // 从现在开始2秒钟之后，每隔2秒钟执行一次job2
-        ScheduledFuture < ? > sf2 = service.scheduleWithFixedDelay( new ScheduledExecutorTest( "job2" ), initialDelay2,
-                delay2, TimeUnit.SECONDS );
+        ScheduledFuture < ? > sf1 = service.scheduleAtFixedRate( new ScheduledExecutorTooLongTest( "job1" ),
+                initialDelay1, period1, TimeUnit.SECONDS );
 
         try {
             Thread.sleep( 10000 );
@@ -65,9 +70,6 @@ public class ScheduledExecutorTest implements Runnable {
 
         if ( !sf1.isCancelled() ) {
             sf1.cancel( false );
-        }
-        if ( !sf2.isCancelled() ) {
-            sf2.cancel( false );
         }
         if ( !service.isShutdown() ) {
             service.shutdown();

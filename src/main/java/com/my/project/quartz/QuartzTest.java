@@ -1,4 +1,4 @@
-package org.quartz.hello;
+package com.my.project.quartz;
 
 import java.util.Calendar;
 
@@ -20,6 +20,8 @@ import org.quartz.TimeOfDay;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+
+import com.my.project.quartz.jobs.HelloJob;
 
 /**
  * Quartz
